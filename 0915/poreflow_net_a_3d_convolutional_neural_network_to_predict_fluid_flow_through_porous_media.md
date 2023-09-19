@@ -106,6 +106,26 @@ Advances in Water Resources 5.361
 
 其中 M 是权重向量，说明流动方向上的孔隙大小，* 代表逐元素乘法。计算 M 的算法可以在附录 A1 中找到。损失函数（方程（5））对真实值和预测之间的差异进行加权，以便训练池中的所有体素具有相同的相关性（高和低孔隙率子样本）。
 
+![1694930229612](image/poreflow_net_a_3d_convolutional_neural_network_to_predict_fluid_flow_through_porous_media/1694930229612.png)
+
+图 17. 权重矩阵 (M) 的横截面。孔隙率较低的区域具有较高的权重（以较亮的颜色表示），因此网络“集中”在这些区域以及较大的通道中。
+
+我们使用以下伪代码计算权重矩阵（图 17）：
+
+ image_size = 500 # 体积边长
+
+ for i in range(0, image_size):  #沿 z 坐标循环
+
+    porosity_z = sum(binary_im[: ,:,i])/image_size^2 # 计算切片的孔隙率
+
+    solid_mask[:,:,i] = (1/porosity_z)*solid_mask[:,:,i] # 乘以一个对较低孔隙率部分进行加权的项（图17)*
+
+    *solid_mask[:,:,i][solid_mask[:,:,i]==0]=1 # 用 1 替换实体*
+
+    *solid_mask[:,:,i] =solid_mask[:,:,i] /sum(solid_mask [:,:,i])* image_size^2 # 归一化
+
+其中二值图像由 3D 矩阵组成，其中 0 代表固体，1 代表流体流动的空间。
+
 ![1694416453954](image/poreflow_net_a_3d_convolutional_neural_network_to_predict_fluid_flow_through_porous_media/1694416453954.png)
 
 图 5.我们的工作流程。从二元 3D 矩阵（左）开始，我们计算四个几何特征（第 2.2 节）。顶部的两个描述本地介质，而底部的两个提供有关全局域的信息。这些特征是针对每个样本即时计算的。然后，对这些特征进行二次采样（黑线）以训练神经网络模型。输出是压力梯度方向的流体速度场。我们用不同的颜色突出显示了速度场预测的不同数量级。
@@ -196,11 +216,9 @@ Advances in Water Resources 5.361
 
 图 14. 其他测试包括：(a) 轻微固结介质，(b) Estillades 石灰岩（Muljadi，2015b），(c) Castlegate 砂岩（Sheppard 和 Prodanovic，2015），(d) 多尺度微砂（Mohammadmoradi） , 2017) 和 (e) Bentheimer 砂岩 (Muljadi, 2015a)，所有这些都可以在 Digital Rocks Portal 上找到
 
-
 ![1694417130037](image/poreflow_net_a_3d_convolutional_neural_network_to_predict_fluid_flow_through_porous_media/1694417130037.png)
 
 图 15. Castlegate 地层砂岩的模拟速度 XY 截面（左）、PoreFlow-Net 预测（中）以及这两者之间的相对误差（右）。速度以从一到负一的无量纲标度显示（最小最大变换）。孔隙空间的平均相对误差仅为 1%，如表2
-
 
 ![1694417152535](image/poreflow_net_a_3d_convolutional_neural_network_to_predict_fluid_flow_through_porous_media/1694417152535.png)
 
@@ -215,7 +233,6 @@ Advances in Water Resources 5.361
 ![1694417220983](image/poreflow_net_a_3d_convolutional_neural_network_to_predict_fluid_flow_through_porous_media/1694417220983.png)
 
 图 17. 权重矩阵 (M) 的横截面。孔隙率较低的区域具有较高的权重（以较亮的颜色表示），因此网络“集中”在这些区域以及较大的通道中。
-
 
 我们证明了我们的卷积神经网络概括了流动问题来预测岩石中的流速，这些岩石的结构比原始训练集复杂得多。这归因于网络能够模拟孔隙形状和域特征与速度场之间的复杂关系。该模型对于不同类型（不同岩性）、不同颗粒分布和孔隙度的岩石表现良好，其中渗透率在几个数量级范围内（图16）。 PoreFlow-Net 在典型桌面上计算流体流场的时间不到一秒，而标准模拟程序在超级计算机设施中需要数小时到数天（取决于所使用的硬件以及数字化孔隙空间几何形状的复杂性） ）。此外，该模型是轻量级表示（大约 25 Mb），而完整的模拟结果需要 20 倍的硬盘空间。该模型可以在任何给定的几何结构中重复使用，而模拟必须根据具体情况进行运行。未来的工作应该集中于寻找适用于裂缝区域和超致密岩石的特征。
 
