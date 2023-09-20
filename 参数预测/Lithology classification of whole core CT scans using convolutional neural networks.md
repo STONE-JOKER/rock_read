@@ -162,7 +162,7 @@ CNN 训练是一个过程，通过该过程，可以调整卷积层中的内核�
 
 ![1693979053007](image/LithologyclassificationofwholecoreCTscansusingconvolutionalneuralnetworks/1693979053007.png)
 
-这里说了会把相似孔隙度渗透的岩石分到同一类中，具体看论文
+这里说了***会把相似孔隙度渗透的岩石分到同一类中***，具体看论文
 
 ## 6.分类后处理
 
