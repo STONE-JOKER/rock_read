@@ -34,17 +34,28 @@
 
 [AI与PDE（四）：FNO与算子学习的范式 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/520487599)
 
+自Fourier Filter是global的，而如果只使用CNN filter的话，感受是local的。该模型设计还有一个目的，就是要与分辨率无关
+
 ![1697428589329](image/read/1697428589329.png)
 
-# [Neural Operator: Learning Maps Between Function Spaces With Applications to PDEs](https://www.jmlr.org/papers/volume24/21-1524/21-1524.pdf) 
+# [Neural Operator: Learning Maps Between Function Spaces With Applications to PDEs](https://www.jmlr.org/papers/volume24/21-1524/21-1524.pdf)
 
 ![1697428830483](image/read/1697428830483.png)
 
 # [PINNeik: Eikonal solution using physics-informed neural networks - ScienceDirect](https://www.sciencedirect.com/science/article/pii/S009830042100131X?via%3Dihub#abs0015)
 
-# [ANI-1: an extensible neural network potential with DFT accuracy at force field computational cost - Chemical Science (RSC Publishing)](https://pubs.rsc.org/en/content/articlelanding/2017/SC/C6SC05720A)
+[使用深度学习和物理约束求解偏微分方程_深度学习 物理求解_啦啦无畏的博客-CSDN博客](https://blog.csdn.net/weixin_41582053/article/details/119960746)
 
+---
+
+
+
+# [ANI-1: an extensible neural network potential with DFT accuracy at force field computational cost - Chemical Science (RSC Publishing)](https://pubs.rsc.org/en/content/articlelanding/2017/SC/C6SC05720A)
 
 # Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations
 
 # Deep Potential Molecular Dynamics: A Scalable Model with the Accuracy of Quantum Mechanics
+
+
+
+[深度学习求解偏微分方程系列一：Deep Galerkin Method - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/359328643)
