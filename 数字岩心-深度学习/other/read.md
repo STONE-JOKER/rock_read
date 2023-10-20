@@ -30,6 +30,19 @@
 
 ![1697428518080](image/read/1697428518080.png)
 
+浅灰色框所示;对流通量模型改进了离散对流算子的近似，发散算子根据有限体积方法强制执行局部动量守恒，压力投影强制执行不可压缩性，显式时间步长算子强制动力学在时间上连续，允许加入额外的时变力。
+
+
+这篇论文首先使用Jax实现了一个可微分的NS求解器（基于有限体积方法，时空一阶的显隐式方法），然后在其中添加了两个可学习的部分:
+
+1. 是有限体积方法在重建界面时，一般传统的有constant或者linear到多项式插值，或者WENO等重建方法，这里使用了神经网络来重建边界面的值。其实就是Learning data driven discretizations 中的方法。上图就是这个部分的图解。
+2. 再用神经网络在每一个时间步后，对解增加一个修正项。
+
+在训练部分，使用了比较寻常的Loss function。在各个时间步累计MSE-Loss。
+
+
+训练时将模型展开了32层，这样可以有效提高长时间的稳定性。
+
 # FOURIER NEURAL OPERATOR FOR PARAMETRIC PARTIAL DIFFERENTIAL EQUATIONS
 
 [AI与PDE（四）：FNO与算子学习的范式 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/520487599)
@@ -48,14 +61,10 @@
 
 ---
 
-
-
 # [ANI-1: an extensible neural network potential with DFT accuracy at force field computational cost - Chemical Science (RSC Publishing)](https://pubs.rsc.org/en/content/articlelanding/2017/SC/C6SC05720A)
 
 # Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations
 
 # Deep Potential Molecular Dynamics: A Scalable Model with the Accuracy of Quantum Mechanics
-
-
 
 [深度学习求解偏微分方程系列一：Deep Galerkin Method - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/359328643)
